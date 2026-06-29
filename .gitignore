@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.lnk
+
+# Environment variables
+.env
+.env.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# ML Models (Large files)
+*.onnx
+*.pt
+*.pth
+
+# Temporary files
+static/img/test.jpg
+*.tmp
+*.temp
+
+# Data - Training images (keep only labels and data.yaml)
+data/train/images/
+data/val/images/
+
+# Vendor dependencies (heavy JavaScript libraries)
+static/vendor/
+static/vendor/bootstrap/
+static/vendor/chart.js/
+static/vendor/datatables/
+static/vendor/fontawesome-free/
+static/vendor/jquery/
+static/vendor/jquery-easing/
+static/js/demo/
+static/img
+
+# OS specific
+.AppleDouble
+.LSOverride
+
+data/

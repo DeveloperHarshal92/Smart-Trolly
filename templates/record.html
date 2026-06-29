@@ -1,0 +1,46 @@
+ {% extends "layout.html" %}
+ {% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Bill</h1>
+    <p class="mb-4">AI Generated Bill - A detailed breakdown of your purchases</p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Grocery Bill</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <style>
+                    thead th {
+                        text-align: center !important;
+                    }
+                </style>
+                {% for table in tables %}
+                <table class="table table-bordered table-hover table-striped align-middle text-center">
+                    {{ table|safe }}
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+                        <a href="video" class="btn btn-outline-primary btn-sm">
+                            Add/Remove Product;
+                        </a>
+        </div>
+        <!--div class="card-footer text-end">
+            <button class="btn btn-success me-2">Print Bill</button>
+            <button class="btn btn-primary">Go Back</button>
+        </div-->
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+
+{% endblock %}
+

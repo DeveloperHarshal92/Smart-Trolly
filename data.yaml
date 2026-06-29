@@ -1,0 +1,5 @@
+train: /content/drive/MyDrive/Colab Notebooks/data/train/images
+val: /content/drive/MyDrive/Colab Notebooks/data/val/images
+
+nc: 5
+names: ['parle_g', 'good_day','colgate','dairy_milk','parachute']

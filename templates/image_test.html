@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Row -->
+    <div class="row justify-content-center">
+
+        <!-- Column -->
+        <div class="col-lg-8">
+
+            <!-- Prediction Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h5 class="m-0 font-weight-bold">Prediction</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img class="img-fluid rounded border" 
+                             style="max-width:100%; height:auto; object-fit:contain;" 
+                             src="static/img/processed.jpg" alt="Prediction Image">
+                    </div>
+                    <p class="text-justify text-secondary mb-4">
+                        {{ result }}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="video" class="btn btn-outline-primary btn-sm">
+                            Scan Another Image &rarr;
+                        </a>
+                        <form class="user" action="" method="post" enctype="multipart/form-data">
+
+                        <button class="btn btn-success btn-sm">
+                            <i class="bi bi-cart-plus"></i> Add to Cart
+                        </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- End Row -->
+
+</div>
+<!-- End Page Content -->
+
+
+{% endblock %}

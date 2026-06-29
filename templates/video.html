@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="col-lg-8 mb-1">
+
+        <!-- Prediction Card -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Real Time Video</h6>
+            </div>
+
+            <div class="card-body">
+
+                <!-- Video Stream -->
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-1 mb-3"
+                        src="{{ url_for('video_stream') }}"
+                        style="width:100%;height:100%;object-fit:fill;">
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="text-center">
+                    <form action="" method="POST">
+                        <button type="submit" class="btn btn-success px-4">
+                            🔍 Scan Products
+                        </button>
+                    </form>
+                </div>
+
+                <!-- RESULT DISPLAY -->
+                {% if result %}
+                <div class="mt-4 text-center">
+                    <h5 class="text-primary">Prediction Result:</h5>
+                    <h3 class="text-success">{{ result }}</h3>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
