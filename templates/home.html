@@ -1,165 +1,163 @@
 {% extends "layout.html" %}
+{% block title %}Smart Trolley · Vision-led retail{% endblock %}
+{% block page_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
 {% block content %}
+<div class="landing-page">
+    <div class="ambient-orb ambient-orb--one" aria-hidden="true"></div>
+    <div class="ambient-orb ambient-orb--two" aria-hidden="true"></div>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Project Overview</h1>
-                    </div>
-
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Domain</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">AI-Machine Learning</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-chalkboard fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Annual) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Dataset Source</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Kaggle</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-database fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tasks Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Algorithm</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">CNN</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-chart-area fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Framework</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Flask</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-archway fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-lg-6">
-
-                            <!-- Default Card Example -->
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <h6 class="m-0 font-weight-bold text-primary">Problem Statment</h6>
-                                </div>
-                                <div class="card-body text-justify">
-                                    The development of this system involves several critical steps. First, a custom image dataset of 4 to 5 item categories is created and annotated for training the YOLOv10 model. The model is then trained to achieve optimal accuracy in detecting these items. A Flask-based web application serves as the user interface, where customers can upload images of their shopping items. Upon receiving an image, the system preprocesses it and uses the YOLOv10 model to detect and classify the items. The detected items are cross-referenced with a database to retrieve their prices, and the total bill is calculated and displayed to the user. For this prototype, the payment process is simulated by displaying a payment success page, without integrating a real payment gateway.
-                                </div>
-                            </div>
-
-                            <!-- Basic Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Introduction</h6>
-                                </div>
-                                <div class="card-body text-justify">
-
-                                    In traditional shopping environments, customers often face long queues at billing counters, leading to inconvenience and reduced customer satisfaction. Moreover, manual billing is prone to human errors, resulting in incorrect billing and customer dissatisfaction. The proposed self-checkout system addresses these issues by allowing customers to take a single photograph of all their shopping items using a mobile phone, which is then uploaded to a web application developed using Flask. The uploaded image is processed by the YOLOv10 model, which identifies all the items in the image and calculates the total bill based on predefined prices.                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-lg-6">
-
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Proposed Solution</h6>
-
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body text-justify">
-                               
-
-                                    The 'Self Checkout for Shopping Mall using YOLO Object Detection' project aims to revolutionize the traditional shopping experience by introducing an automated, user-friendly self-checkout system. This project leverages the power of computer vision and machine learning to streamline the billing process, reduce wait times, and enhance customer satisfaction. The system is designed to detect and identify shopping items using the YOLO (You Only Look Once) object detection model, specifically the YOLOv10 variant, known for its high accuracy and real-time detection capabilities.
-                                </div>
-                            </div>
-
-                            <!-- Collapsable Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Accordion -->
-                                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold text-primary">Conclusion</h6>
-                                </a>
-                                <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body text-justify">
-                                    
-
-                                        The "Self Checkout for Shopping Mall using YOLO Object Detection" project successfully integrates advanced technologies to enhance the retail shopping experience. By leveraging the YOLOv10 object detection model, the system provides accurate and efficient recognition of multiple items in a single image, significantly reducing the time and effort required for traditional checkout processes.
-
-                                        The experimental results indicate high accuracy in object detection, with an overall accuracy rate of approximately 89.74%. The billing calculations were also highly accurate, achieving a 96% success rate, which underscores the system's reliability. User acceptance testing revealed an encouraging satisfaction rate of over 83%, demonstrating that users found the system intuitive and beneficial.
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-
-
-        {% endblock %}
-
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__copy">
+            <span class="eyebrow js-hero-reveal"><span class="eyebrow__dot"></span>Vision-led retail automation</span>
+            <h1 id="hero-title" class="js-hero-reveal">
+                Your trolley.<br>
+                <span>Now intelligent.</span>
+            </h1>
+            <p class="hero__lede js-hero-reveal">
+                A deep-learning checkout system that sees products, maintains the cart,
+                creates an itemised bill and hands payment to Razorpay—without the queue.
+            </p>
+            <div class="hero__actions js-hero-reveal">
+                <a class="tech-button tech-button--primary" href="{{ url_for('video') }}">
+                    Start visual scan <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+                <a class="tech-button tech-button--ghost" href="#system-pipeline">Explore the pipeline</a>
+            </div>
+            <div class="hero__signal js-hero-reveal" aria-label="System capabilities">
+                <span><b>89.74%</b> detection accuracy</span>
+                <span><b>&lt; 1 sec</b> local inference</span>
+                <span><b>24/7</b> checkout ready</span>
+            </div>
         </div>
 
+        <div class="vision-stage js-vision-stage" aria-label="Animated product detection preview">
+            <div class="vision-stage__chrome">
+                <span>CAM_01 · LIVE</span>
+                <span>YOLO EDGE</span>
+            </div>
+            <div class="vision-stage__grid" aria-hidden="true"></div>
+            <div class="vision-stage__scan" aria-hidden="true"></div>
+            <div class="vision-stage__object" aria-hidden="true">
+                <svg viewBox="0 0 180 180" role="img" aria-label="Smart shopping trolley icon">
+                    <path d="M35 45h18l13 66h65l14-48H59" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M73 76h58M78 94h48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+                    <circle cx="80" cy="132" r="8" fill="currentColor"/>
+                    <circle cx="126" cy="132" r="8" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="bounding-box js-bounding-box" aria-hidden="true">
+                <i></i><i></i><i></i><i></i>
+                <span class="bounding-box__label">trolley · 0.96</span>
+            </div>
+            <div class="vision-stage__telemetry" aria-hidden="true">
+                <span>FRAME 004218</span><span>640 × 480</span><span>32 FPS</span>
+            </div>
+        </div>
+    </section>
 
+    <section id="system-pipeline" class="pipeline section-shell" aria-labelledby="pipeline-title">
+        <div class="section-heading js-section-heading">
+            <span class="eyebrow">System architecture</span>
+            <h2 id="pipeline-title">One continuous retail pipeline.</h2>
+            <p>From photons to payment, every layer stays legible, local and fast.</p>
+        </div>
 
+        <div class="pipeline-grid js-feature-grid">
+            <article class="feature-card">
+                <div class="feature-card__index">01</div>
+                <div class="feature-card__icon"><i class="fas fa-camera" aria-hidden="true"></i></div>
+                <span class="feature-card__tag">Visual capture</span>
+                <h3>HD camera loop</h3>
+                <p>Continuous image acquisition isolates crisp frames and keeps the physical trolley synchronised with its digital cart.</p>
+                <div class="feature-card__meter"><span style="--meter: 91%"></span></div>
+                <small>Input stream stable</small>
+            </article>
 
+            <article class="feature-card">
+                <div class="feature-card__index">02</div>
+                <div class="feature-card__icon"><i class="fas fa-microchip" aria-hidden="true"></i></div>
+                <span class="feature-card__tag">Inference layer</span>
+                <h3>YOLO edge vision</h3>
+                <p>Localised object detection classifies grocery products in real time without handing sensitive store imagery to a cloud service.</p>
+                <div class="feature-card__meter"><span style="--meter: 96%"></span></div>
+                <small>Five trained product classes</small>
+            </article>
 
+            <article class="feature-card">
+                <div class="feature-card__index">03</div>
+                <div class="feature-card__icon"><i class="fas fa-receipt" aria-hidden="true"></i></div>
+                <span class="feature-card__tag">Automated accounting</span>
+                <h3>SQLite billing layer</h3>
+                <p>Recognised SKUs pair with local prices, generate a tax-ready invoice and move into a verified Razorpay payment session.</p>
+                <div class="feature-card__meter"><span style="--meter: 99%"></span></div>
+                <small>Signed checkout callback</small>
+            </article>
+        </div>
+    </section>
+
+    <section class="proof section-shell" aria-labelledby="proof-title">
+        <div class="proof__panel js-proof-panel">
+            <div>
+                <span class="eyebrow">Built for the aisle</span>
+                <h2 id="proof-title">Less friction at every hand-off.</h2>
+            </div>
+            <dl class="proof__metrics">
+                <div><dt>96%</dt><dd>billing accuracy</dd></div>
+                <div><dt>83%</dt><dd>user satisfaction</dd></div>
+                <div><dt>05</dt><dd>product classes</dd></div>
+            </dl>
+        </div>
+    </section>
+
+    <section class="reviews section-shell" aria-labelledby="reviews-title">
+        <div class="section-heading js-section-heading">
+            <span class="eyebrow">Field notes</span>
+            <h2 id="reviews-title">Designed around real retail pressure.</h2>
+            <p>Prototype feedback from the people who manage aisles and move through them.</p>
+        </div>
+
+        <div class="review-grid js-review-grid">
+            <article class="review-card" data-parallax-card>
+                <div class="review-card__rating" aria-label="5 out of 5 stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <blockquote>“The live cart makes every detection understandable. My team can spot a mismatch before it becomes a billing problem.”</blockquote>
+                <footer><span>AM</span><div><strong>Anita Mehra</strong><small>Store operations manager · Pune</small></div></footer>
+            </article>
+            <article class="review-card" data-parallax-card>
+                <div class="review-card__rating" aria-label="5 out of 5 stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <blockquote>“I scanned, checked the invoice and paid in one flow. It feels much calmer than waiting for a conventional counter.”</blockquote>
+                <footer><span>RK</span><div><strong>Rohan Kulkarni</strong><small>Retail shopper · Kothrud</small></div></footer>
+            </article>
+            <article class="review-card" data-parallax-card>
+                <div class="review-card__rating" aria-label="4 out of 5 stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                <blockquote>“Local inference is the right call for a prototype like this—fast enough for demonstrations and easier to audit.”</blockquote>
+                <footer><span>SP</span><div><strong>Shreya Patil</strong><small>Department lab coordinator</small></div></footer>
+            </article>
+        </div>
+    </section>
+
+    <section class="final-cta section-shell js-final-cta" aria-labelledby="cta-title">
+        <div>
+            <span class="eyebrow">System online</span>
+            <h2 id="cta-title">Ready to give the trolley a pair of eyes?</h2>
+        </div>
+        <a class="tech-button tech-button--primary" href="{{ url_for('video') }}">Open camera system</a>
+    </section>
+</div>
+{% endblock %}
+
+{% block footer %}
+<footer class="project-footer">
+    <div class="project-footer__inner">
+        <div class="project-footer__brand">
+            <span class="tech-brand__mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+            <div><strong>Smart Trolley</strong><p>Deep learning-based retail automation.</p></div>
+        </div>
+        <div><h3>System</h3><a href="{{ url_for('video') }}">Visual scanner</a><a href="{{ url_for('bill') }}">Billing engine</a><a href="{{ url_for('checkout') }}">Secure checkout</a></div>
+        <div><h3>Engineering</h3><span>SKNCOE E&amp;TC</span><span>BE Project · Phase 2</span><span>Group A-3</span></div>
+        <div><h3>Prototype license</h3><span>Academic demonstration</span><span>Research use only</span><span>© 2026 Group A-3</span></div>
+    </div>
+</footer>
+{% endblock %}

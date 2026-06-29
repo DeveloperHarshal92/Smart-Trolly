@@ -1,225 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Deep Learning-Based Smart Shopping Trolley">
+    <meta name="theme-color" content="#FAFAFA">
+    <title>{% block title %}Smart Trolley{% endblock %}</title>
 
-    <title>SB Admin 2 - Checkout</title>
-
-    <!-- Bootstrap 5 and Custom Fonts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
-
-    <!-- Custom Styles -->
-    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-        .sidebar {
-            background: #007bff;
-        }
-        .sidebar .nav-link {
-            color: #fff;
-        }
-        .sidebar .nav-link:hover {
-            background-color: #0056b3;
-        }
-        .sidebar .sidebar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-        .sidebar .sidebar-brand-icon {
-            font-size: 2rem;
-        }
-        .topbar {
-            background-color: #f8f9fc;
-        }
-        .topbar .navbar-nav .nav-item .nav-link {
-            color: #6c757d;
-        }
-        .topbar .navbar-nav .nav-item .nav-link:hover {
-            color: #007bff;
-        }
-        footer {
-            background-color: #f8f9fc;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/pages.css') }}" rel="stylesheet">
+    {% block page_styles %}{% endblock %}
 </head>
+<body class="tech-shell" data-page="{{ request.endpoint or 'unknown' }}">
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-<body id="page-top" data-load="1786236063">
-
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Checkout</div>
+    <header class="tech-nav" aria-label="Primary navigation">
+        <div class="tech-nav__inner">
+            <a class="tech-brand" href="{{ url_for('home') }}" aria-label="Smart Trolley home">
+                <span class="tech-brand__mark" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                </span>
+                <span>Smart<span>Trolley</span></span>
             </a>
 
-            <!-- Sidebar Menu Items -->
-            <li class="nav-item">
-                <a class="nav-link" href="home">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Home</span>
-                </a>
-            </li>
+            <button class="tech-nav__toggle" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#primaryNav" aria-controls="primaryNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
 
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+            <nav class="collapse tech-nav__links" id="primaryNav">
+                <a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>Overview</a>
+                <a href="{{ url_for('dashboard') }}" {% if request.endpoint == 'dashboard' %}aria-current="page"{% endif %}>Insights</a>
+                <a href="{{ url_for('video') }}" {% if request.endpoint in ('video', 'image', 'image_test') %}aria-current="page"{% endif %}>Scan</a>
+                <a href="{{ url_for('bill') }}" {% if request.endpoint == 'bill' %}aria-current="page"{% endif %}>Bill</a>
+                <a href="{{ url_for('checkout') }}" {% if request.endpoint == 'checkout' %}aria-current="page"{% endif %}>Checkout</a>
+            </nav>
 
-            <li class="nav-item">
-                <a class="nav-link" href="video">
-                    <i class="fas fa-fw fa-image"></i>
-                    <span>Scan Image</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="bill">
-                    <i class="fas fa-fw fa-file-invoice"></i>
-                    <span>Generate Bill</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="checkout">
-                    <i class="fas fa-fw fa-credit-card"></i>
-                    <span>Checkout</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="login">
-                    <i class="fas fa-fw fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
-
-        </ul>
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light topbar mb-4 shadow">
-
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <h1 class="h3 mb-0 text-gray-800">Self Checkout System</h1>
-
-                    <ul class="navbar-nav ms-auto">
-
-                        <!-- User Info -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ name }}</span>
-                                <img class="img-profile rounded-circle" src="static/img/undraw_profile.svg">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="register">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Register
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="login">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <!--div class="row">
-                        <div class="col-lg-12">
-                            <h2 class="h4 text-gray-800">Checkout Page</h2>
-                            <p class="mb-4">Complete your purchase securely and easily using the options below.</p>
-                        </div>
-                    </div-->
-
-                    {% block content %}
-                    {% endblock %}
-
-                </div>
-
-            </div>
-
-            <!-- Footer -->
-            <footer>
-                <span>&copy; malwaredetect.com 2023</span>
-            </footer>
-
-        </div>
-
-    </div>
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="logoutModalLabel">Ready to Leave?</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login">Logout</a>
-                </div>
+            <div class="tech-nav__user">
+                <span class="tech-nav__pulse" aria-hidden="true"></span>
+                <span>{{ name or 'Operator' }}</span>
+                <a href="{{ url_for('login') }}" aria-label="Log out"><i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <main id="main-content" class="tech-shell__main">
+        {% block content %}{% endblock %}
+    </main>
 
-    <!-- jQuery and Custom JS -->
-    <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/js/ml.js"></script>
+    {% block footer %}
+    <footer class="tech-shell__footer">
+        <span>Smart Trolley · SKNCOE E&amp;TC · Group A-3</span>
+        <span>Computer vision retail prototype</span>
+    </footer>
+    {% endblock %}
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    {% block page_scripts %}{% endblock %}
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-<script src="static/js/ml.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        $().jqLoad();
-    });
-</script>
 </html>

@@ -1,47 +1,20 @@
 {% extends "layout.html" %}
+{% block title %}Live scanner · Smart Trolley{% endblock %}
 {% block content %}
-
-<div class="container-fluid">
-
-    <div class="col-lg-8 mb-1">
-
-        <!-- Prediction Card -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Real Time Video</h6>
-            </div>
-
-            <div class="card-body">
-
-                <!-- Video Stream -->
-                <div class="text-center">
-                    <img class="img-fluid px-3 px-sm-4 mt-1 mb-3"
-                        src="{{ url_for('video_stream') }}"
-                        style="width:100%;height:100%;object-fit:fill;">
-                </div>
-
-                <!-- SUBMIT BUTTON -->
-                <div class="text-center">
-                    <form action="" method="POST">
-                        <button type="submit" class="btn btn-success px-4">
-                            🔍 Scan Products
-                        </button>
-                    </form>
-                </div>
-
-                <!-- RESULT DISPLAY -->
-                {% if result %}
-                <div class="mt-4 text-center">
-                    <h5 class="text-primary">Prediction Result:</h5>
-                    <h3 class="text-success">{{ result }}</h3>
-                </div>
-                {% endif %}
-
-            </div>
+<section class="page-wrap">
+    <header class="page-header js-invoice-reveal"><div><span class="page-kicker"><i></i> Camera inference</span><h1>Live product scanner.</h1><p>Position grocery products inside the guide, then capture one clean frame for detection.</p></div><a class="ui-button ui-button--soft" href="{{ url_for('image') }}"><i class="fas fa-image"></i> Upload instead</a></header>
+    {% if error %}<div class="checkout-alert checkout-alert--error" role="alert"><i class="fas fa-circle-exclamation"></i><div><strong>Camera unavailable</strong><span>{{ error }}</span></div></div>{% endif %}
+    <div class="scanner-grid">
+        <div class="camera-shell js-invoice-reveal">
+            <div class="camera-shell__bar"><span>CAM_01 · 640 × 480</span><span id="stream-status" class="stream-pill">CONNECTING</span></div>
+            <div class="camera-shell__feed"><img id="video-feed" src="{{ url_for('video_stream') }}" data-stream-url="{{ url_for('video_stream') }}" alt="Live trolley camera stream"></div>
+            <div class="camera-shell__controls"><form method="POST"><button class="ui-button ui-button--success" type="submit"><i class="fas fa-crosshairs"></i> Capture &amp; detect</button></form><button class="ui-button ui-button--soft" type="button" data-retry-stream><i class="fas fa-rotate"></i> Retry camera</button></div>
         </div>
-
+        <aside class="scanner-panel">
+            <div class="info-block"><h3>Detection checklist</h3><ol class="step-list"><li>Keep every product fully visible</li><li>Avoid reflections and deep shadows</li><li>Hold the trolley still before capture</li></ol></div>
+            <div class="info-block"><h3>Inference profile</h3><p>Local YOLO processing · five trained classes · session-bound trolley cart.</p></div>
+            {% if result %}<div class="info-block"><h3>Latest result</h3><div class="detected-list"><span class="detected-chip">{{ result }}</span></div></div>{% endif %}
+        </aside>
     </div>
-
-</div>
-
+</section>
 {% endblock %}

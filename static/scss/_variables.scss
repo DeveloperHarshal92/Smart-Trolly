@@ -1,81 +1,136 @@
-// Override Bootstrap default variables here
-// Do not edit any of the files in /vendor/bootstrap/scss/!
+@use "sass:map";
 
-// Color Variables
-// Bootstrap Color Overrides
+// Light Mode Tech design tokens
+// Shared by landing.scss and billing.scss.
 
-$white: #fff !default;
-$gray-100: #f8f9fc !default;
-$gray-200: #eaecf4 !default;
-$gray-300: #dddfeb !default;
-$gray-400: #d1d3e2 !default;
-$gray-500: #b7b9cc !default;
-$gray-600: #858796 !default;
-$gray-700: #6e707e !default;
-$gray-800: #5a5c69 !default;
-$gray-900: #3a3b45 !default;
-$black: #000 !default;
+// Core palette
+$canvas: #fafafa;
+$surface: #ffffff;
+$surface-soft: #f7f8ff;
+$surface-glass: rgba(255, 255, 255, 0.78);
+$ink: #111827;
+$ink-soft: #475569;
+$ink-muted: #7c879b;
+$line: #e7e9f2;
+$line-strong: #d7dbea;
+$indigo: #4f46e5;
+$indigo-deep: #312e81;
+$cyan: #00d2ff;
+$success: #10b981;
+$alert: #ef4444;
+$warning: #f59e0b;
 
-$blue: #4e73df !default;
-$indigo: #6610f2 !default;
-$purple: #6f42c1 !default;
-$pink: #e83e8c !default;
-$red: #e74a3b !default;
-$orange: #fd7e14 !default;
-$yellow: #f6c23e !default;
-$green: #1cc88a !default;
-$teal: #20c9a6 !default;
-$cyan: #36b9cc !default;
-
-// Custom Colors
-$brand-google: #ea4335 !default;
-$brand-facebook: #3b5998 !default;
-
-// Set Contrast Threshold
-$yiq-contrasted-threshold: 195 !default;
+$colors: (
+  "canvas": $canvas,
+  "surface": $surface,
+  "ink": $ink,
+  "muted": $ink-muted,
+  "indigo": $indigo,
+  "cyan": $cyan,
+  "success": $success,
+  "alert": $alert,
+  "warning": $warning
+);
 
 // Typography
-$body-color: $gray-600 !default;
+$font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$font-mono: "SFMono-Regular", "Cascadia Code", "Roboto Mono", monospace;
+$weight-regular: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+$weight-black: 800;
+$type-xs: clamp(0.72rem, 0.68rem + 0.15vw, 0.8rem);
+$type-sm: clamp(0.84rem, 0.8rem + 0.15vw, 0.94rem);
+$type-base: clamp(0.96rem, 0.91rem + 0.2vw, 1.08rem);
+$type-lg: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
+$type-xl: clamp(1.45rem, 1.15rem + 1vw, 2.05rem);
+$type-display: clamp(2.65rem, 1.85rem + 4vw, 6.4rem);
 
-$font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+// Layout and spacing
+$container: 1180px;
+$container-wide: 1360px;
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.5rem;
+$space-6: 2rem;
+$space-7: 3rem;
+$space-8: 4.5rem;
+$space-9: 7rem;
 
-$font-weight-light: 300 !default;
-// $font-weight-base: 400;
-$headings-font-weight: 400 !default;
+// Radius, shadow, and motion
+$radius-sm: 0.75rem;
+$radius-md: 1.15rem;
+$radius-lg: 1.75rem;
+$radius-pill: 999px;
+$shadow-ambient: 0 10px 40px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+$shadow-lift: 0 24px 70px rgba(38, 46, 90, 0.12), 0 6px 18px rgba(38, 46, 90, 0.06);
+$transition-fast: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+$transition-fluid: 420ms cubic-bezier(0.16, 1, 0.3, 1);
 
-// Shadows
-$box-shadow-sm: 0 0.125rem 0.25rem 0 rgba($gray-900, .2) !default;
-$box-shadow: 0 0.15rem 1.75rem 0 rgba($gray-900, .15) !default;
-// $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;
+// Responsive breakpoints
+$breakpoints: (
+  "xs": 360px,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1440px
+);
 
-// Borders Radius
-$border-radius: 0.35rem !default;
-$border-color: darken($gray-200, 2%) !default;
+@function breakpoint($name) {
+  @return map.get($breakpoints, $name);
+}
 
-// Spacing Variables
-// Change below variable if the height of the navbar changes
-$topbar-base-height: 4.375rem !default;
-// Change below variable to change the width of the sidenav
-$sidebar-base-width: 14rem !default;
-// Change below variable to change the width of the sidenav when collapsed
-$sidebar-collapsed-width: 6.5rem !default;
+@mixin respond-up($name) {
+  @media (min-width: breakpoint($name)) {
+    @content;
+  }
+}
 
-// Card
-$card-cap-bg: $gray-100 !default;
-$card-border-color: $border-color !default;
+@mixin respond-down($name) {
+  @media (max-width: calc(#{breakpoint($name)} - 0.02px)) {
+    @content;
+  }
+}
 
-// Adjust column spacing for symmetry
-$spacer: 1rem !default;
-$grid-gutter-width: $spacer * 1.5 !default;
+@mixin glass-panel($blur: 16px) {
+  background: $surface-glass;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: $shadow-ambient;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
 
-// Transitions
-$transition-collapse: height .15s ease !default;
+@mixin fluid-hover($scale: 1.015, $distance: -4px) {
+  transition: transform $transition-fluid, box-shadow $transition-fluid, border-color $transition-fast;
+  &:hover {
+    transform: translateY($distance) scale($scale);
+    box-shadow: $shadow-lift;
+  }
+}
 
-// Dropdowns
-$dropdown-font-size: 0.85rem !default;
-$dropdown-border-color: $border-color !default;
+@mixin focus-ring($color: $indigo) {
+  &:focus-visible {
+    outline: 3px solid rgba($color, 0.28);
+    outline-offset: 4px;
+  }
+}
 
-// Images
-$login-image: 'https://source.unsplash.com/K4mSJ7kc0As/600x800' !default;
-$register-image: 'https://source.unsplash.com/Mv9hjnEUHR4/600x800' !default;
-$password-image: 'https://source.unsplash.com/oWTW-jNGl9I/600x800' !default;
+@mixin neon-border($color: $cyan) {
+  border: 1px solid rgba($color, 0.54);
+  box-shadow: 0 0 0 1px rgba($color, 0.08), 0 0 28px rgba($color, 0.16);
+}
+
+@mixin section-shell($max-width: $container) {
+  width: min(calc(100% - 2rem), $max-width);
+  margin-inline: auto;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

@@ -1,46 +1,8 @@
- {% extends "layout.html" %}
- {% block content %}
-
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Bill</h1>
-    <p class="mb-4">AI Generated Bill - A detailed breakdown of your purchases</p>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-primary text-white">
-            <h6 class="m-0 font-weight-bold">Grocery Bill</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <style>
-                    thead th {
-                        text-align: center !important;
-                    }
-                </style>
-                {% for table in tables %}
-                <table class="table table-bordered table-hover table-striped align-middle text-center">
-                    {{ table|safe }}
-                </table>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-                        <a href="video" class="btn btn-outline-primary btn-sm">
-                            Add/Remove Product;
-                        </a>
-        </div>
-        <!--div class="card-footer text-end">
-            <button class="btn btn-success me-2">Print Bill</button>
-            <button class="btn btn-primary">Go Back</button>
-        </div-->
-    </div>
-
-</div>
-<!-- /.container-fluid -->
-
-
+{% extends "layout.html" %}
+{% block title %}Generated bill · Smart Trolley{% endblock %}
+{% block content %}
+<section class="page-wrap">
+    <header class="page-header"><div><span class="page-kicker"><i></i> Automated accounting</span><h1>Your generated bill.</h1><p>Quantities and rates were calculated from the server-side trolley session.</p></div><div class="page-actions"><button class="ui-button ui-button--soft" type="button" data-print-invoice><i class="fas fa-print"></i> Print bill</button><a class="ui-button" href="{{ url_for('checkout') }}">Review tax invoice <i class="fas fa-arrow-right"></i></a></div></header>
+    <article class="surface-card bill-card"><header class="surface-card__head"><div><span>Cart ledger</span><h2>Detected grocery items</h2></div><a class="ui-button ui-button--soft" href="{{ url_for('video') }}"><i class="fas fa-plus"></i> Add products</a></header><div class="table-responsive">{% for table in tables %}{{ table|safe }}{% endfor %}</div></article>
+</section>
 {% endblock %}
-

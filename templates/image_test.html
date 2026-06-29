@@ -1,50 +1,14 @@
 {% extends "layout.html" %}
+{% block title %}Detection result · Smart Trolley{% endblock %}
 {% block content %}
-
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-    <!-- Row -->
-    <div class="row justify-content-center">
-
-        <!-- Column -->
-        <div class="col-lg-8">
-
-            <!-- Prediction Card -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white text-center py-3">
-                    <h5 class="m-0 font-weight-bold">Prediction</h5>
-                </div>
-                <div class="card-body">
-                    <div class="text-center mb-4">
-                        <img class="img-fluid rounded border" 
-                             style="max-width:100%; height:auto; object-fit:contain;" 
-                             src="static/img/processed.jpg" alt="Prediction Image">
-                    </div>
-                    <p class="text-justify text-secondary mb-4">
-                        {{ result }}
-                    </p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="video" class="btn btn-outline-primary btn-sm">
-                            Scan Another Image &rarr;
-                        </a>
-                        <form class="user" action="" method="post" enctype="multipart/form-data">
-
-                        <button class="btn btn-success btn-sm">
-                            <i class="bi bi-cart-plus"></i> Add to Cart
-                        </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+<section class="page-wrap">
+    <header class="page-header"><div><span class="page-kicker"><i></i> Inference complete</span><h1>Review detections.</h1><p>Confirm the recognised products before moving them into the billing flow.</p></div></header>
+    <div class="result-layout">
+        <div class="result-image"><img src="{{ url_for('static', filename='img/processed.jpg') }}" alt="Processed product detection frame"><span>BOUNDING BOX OUTPUT</span></div>
+        <aside class="surface-card"><header class="surface-card__head"><div><span>Detected classes</span><h2>Current trolley frame</h2></div></header><div class="surface-card__body">
+            {% if result %}<div class="detected-list">{% for item in result %}<span class="detected-chip"><i class="fas fa-check"></i> {{ item|replace('_',' ')|title }}</span>{% endfor %}</div>{% else %}<div class="empty-state">No supported products were detected in this frame.</div>{% endif %}
+            <div class="page-actions mt-4"><a class="ui-button ui-button--soft" href="{{ url_for('video') }}"><i class="fas fa-rotate"></i> Scan again</a><form method="post"><button class="ui-button ui-button--success" type="submit"><i class="fas fa-cart-plus"></i> Continue to bill</button></form></div>
+        </div></aside>
     </div>
-    <!-- End Row -->
-
-</div>
-<!-- End Page Content -->
-
-
+</section>
 {% endblock %}

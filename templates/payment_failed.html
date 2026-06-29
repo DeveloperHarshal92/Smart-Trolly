@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Payment not confirmed · Smart Trolley{% endblock %}
+{% block page_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/billing.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="gateway-page gateway-page--failed">
+    <div class="gateway-card js-invoice-reveal">
+        <div class="gateway-card__icon gateway-card__icon--failed" aria-hidden="true"><i class="fas fa-xmark"></i></div>
+        <span class="billing-kicker billing-kicker--alert"><i></i> Payment not confirmed</span>
+        <h1>No charge was accepted.</h1>
+        <div class="checkout-alert checkout-alert--error"><i class="fas fa-circle-exclamation"></i><div><strong>Verification stopped</strong><span>{{ reason }}</span></div></div>
+        <a class="console-button console-button--pay" href="{{ url_for('checkout') }}"><span>Return to checkout</span><i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+{% endblock %}

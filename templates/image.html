@@ -1,68 +1,14 @@
 {% extends "layout.html" %}
+{% block title %}Upload scan · Smart Trolley{% endblock %}
 {% block content %}
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link href="static/css/image.css" rel="stylesheet">
-
-<main class="main_full">
-	<div class="container">
-	<form action="" method="post" enctype="multipart/form-data">
-		<div class="uploaded_file_view" id="uploaded_view">
-			<span class="file_remove">X</span>
-			
-		</div>
-		<button id="predict" class="btn btn-primary btn-user btn-block panel" style="display: none;">
-			Detect
-		</button>
-
-		
-		<div class="panel">
-			<div class="button_outer">
-				<div class="btn_upload">
-					<input type="file" id="upload_file" name="doc">
-					Scan Products
-				</div>
-
-				<div class="processing_bar"></div>
-				<div class="success_box"></div>
-
-			</div>
-		
-		</div>
-	</form>
-		<div class="error_msg"></div>
-
-	</div>
-</main>
-
-<script>
-	var btnUpload = $("#upload_file"),
-		btnOuter = $(".button_outer");
-		x = document.getElementById("predict");
-	btnUpload.on("change", function(e){
-		var ext = btnUpload.val().split('.').pop().toLowerCase();
-		if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-			$(".error_msg").text("Not an Image...");
-		} else {
-			$(".error_msg").text("");
-			btnOuter.addClass("file_uploading");
-			setTimeout(function(){
-				btnOuter.addClass("file_uploaded");
-				x.style.display = "block";
-			},3000);
-			var uploadedFile = URL.createObjectURL(e.target.files[0]);
-			setTimeout(function(){
-				$("#uploaded_view").append('<img src="'+uploadedFile+'" />').addClass("show");
-			},3500);
-		}
-	});
-	$(".file_remove").on("click", function(e){
-		$("#uploaded_view").removeClass("show");
-		$("#uploaded_view").find("img").remove();
-		btnOuter.removeClass("file_uploading");
-		btnOuter.removeClass("file_uploaded");
-		x.style.display = "none";
-	});
-</script>
-
-
+<section class="page-wrap">
+    <header class="page-header"><div><span class="page-kicker"><i></i> File inference</span><h1>Upload a trolley frame.</h1><p>Use an existing JPG or PNG when a live camera is unavailable.</p></div><a class="ui-button ui-button--soft" href="{{ url_for('video') }}"><i class="fas fa-video"></i> Live camera</a></header>
+    <form class="upload-shell" method="post" enctype="multipart/form-data" data-upload-form>
+        <label class="upload-zone" data-upload-zone>
+            <input type="file" name="doc" accept="image/png,image/jpeg" data-upload-input required>
+            <div class="upload-zone__content"><img class="upload-zone__preview" data-upload-preview alt="Selected product frame preview"><div data-upload-prompt><div class="upload-zone__icon"><i class="fas fa-cloud-arrow-up"></i></div><h2>Drop or choose an image</h2><p>PNG or JPG · clear overhead trolley view recommended</p><span class="ui-button ui-button--soft">Choose image</span></div></div>
+        </label>
+        <aside class="scanner-panel"><div class="info-block"><h3>Before upload</h3><ol class="step-list"><li>Use even lighting</li><li>Keep labels facing up</li><li>Avoid overlapping products</li></ol></div><button class="ui-button ui-button--success" type="submit" data-upload-submit disabled><i class="fas fa-wand-magic-sparkles"></i> Detect products</button><button class="ui-button ui-button--soft" type="button" data-upload-reset disabled><i class="fas fa-xmark"></i> Remove selection</button><p class="empty-state" data-upload-name>No image selected.</p></aside>
+    </form>
+</section>
 {% endblock %}

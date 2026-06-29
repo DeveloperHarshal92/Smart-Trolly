@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Payment confirmed · Smart Trolley{% endblock %}
+{% block page_styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/billing.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="gateway-page gateway-page--success">
+    <div class="gateway-card js-invoice-reveal">
+        <div class="gateway-card__icon gateway-card__icon--success" aria-hidden="true"><i class="fas fa-check"></i></div>
+        <span class="status-pill"><i></i>PAID VIA TOUCHLESS WALLET</span>
+        <h1>Payment confirmed.</h1>
+        <p>Razorpay’s signed response was verified for payment <code>{{ payment_id }}</code>.</p>
+        <strong class="gateway-card__amount">₹{{ '%.2f'|format(total_bill) }}</strong>
+        <div class="checkout-alert {{ 'checkout-alert--success' if email_sent else 'checkout-alert--preview' }}">
+            <i class="fas {{ 'fa-envelope-circle-check' if email_sent else 'fa-triangle-exclamation' }}" aria-hidden="true"></i>
+            <div><strong>{{ 'Invoice delivered' if email_sent else 'Invoice delivery needs attention' }}</strong><span>{{ email_msg }}</span></div>
+        </div>
+        <div class="gateway-card__actions">
+            {% if pdf_filename %}
+            <a class="console-button console-button--secondary" href="{{ url_for('download_bill', filename=pdf_filename) }}"><i class="fas fa-download"></i>Download invoice</a>
+            {% endif %}
+            <a class="console-button console-button--pay" href="{{ url_for('home') }}"><span>Return home</span><i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+{% endblock %}
