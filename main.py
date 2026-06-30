@@ -149,11 +149,33 @@ def video_stream():
         video_feed(trolley_id),
         mimetype='multipart/x-mixed-replace; boundary=frame'
     )
-    from realVideo import video_feed
-    return Response(
-        video_feed(0),
-        mimetype='multipart/x-mixed-replace; boundary=frame'
-    )
+
+
+@app.route('/auto_scan', methods=['POST'])
+def auto_scan():
+    """
+    Polled by the frontend every ~2s once the user clicks
+    "Capture & detect" on the live feed. Reads the current frame
+    in-memory (no manual capture needed), runs detection, and
+    appends any newly detected items to this trolley's cart.
+
+    Returns JSON: {status, new_items, all_items} so the frontend
+    can play a beep per new item and update the live list without
+    a page reload.
+    """
+    from realVideo import detect_live_frame
+    trolley_id = _get_trolley_id()
+    result = detect_live_frame(trolley_id=trolley_id)
+    return result
+
+
+@app.route('/reset_scan', methods=['POST'])
+def reset_scan():
+    """Clears this trolley's cart — called when starting a fresh auto-scan session."""
+    from realVideo import set_cart_items
+    trolley_id = _get_trolley_id()
+    set_cart_items(trolley_id, [])
+    return {"status": "ok"}
 
 @app.route('/image', methods=['GET', 'POST'])
 def image():

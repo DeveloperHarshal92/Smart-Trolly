@@ -109,6 +109,21 @@ def get_cart_items(trolley_id) -> list:
     return list(CART_STORE.get(_normalize_trolley_id(trolley_id), []))
 
 
+def append_cart_items(trolley_id, items) -> list:
+    """
+    Adds items to the existing cart instead of replacing it.
+    Used by the auto-scan polling loop, where every detection pass
+    should accumulate onto what's already in the trolley — unlike
+    set_cart_items(), which the manual /video single-shot flow uses
+    to fully replace the cart with one frame's detections.
+    """
+    key = _normalize_trolley_id(trolley_id)
+    existing = CART_STORE.get(key, [])
+    new_valid = [item.strip() for item in (items or []) if isinstance(item, str) and item.strip()]
+    CART_STORE[key] = existing + new_valid
+    return new_valid
+
+
 def detect_and_store_items(image_path: str, trolley_id=None) -> list:
     """Runs detection on an image if the model is available and stores results."""
     if process_frame is None:
@@ -121,6 +136,66 @@ def detect_and_store_items(image_path: str, trolley_id=None) -> list:
         detected_items = []
 
     return set_cart_items(trolley_id, detected_items)
+
+
+def detect_live_frame(trolley_id=None) -> dict:
+    """
+    Grabs the current frame straight from the live camera (no disk write)
+    and runs detection on it, appending any detected items to the cart.
+
+    Used by the /auto_scan polling loop while the camera feed is live —
+    distinct from capture_frame(), which is for the manual single-shot
+    /video POST flow and writes to disk + replaces the cart via
+    detect_and_store_items()/set_cart_items().
+
+    Returns {"status": "ok"|"error", "new_items": [...], "all_items": [...]}
+    so the Flask route can hand it straight back as JSON.
+    """
+    active_cap = _ensure_camera()
+    if active_cap is None:
+        return {"status": "error", "message": "Camera not available",
+                "new_items": [], "all_items": get_cart_items(trolley_id)}
+
+    try:
+        ret, img = active_cap.read()
+    except cv2.error as e:
+        return {"status": "error", "message": f"Camera read failed: {e}",
+                "new_items": [], "all_items": get_cart_items(trolley_id)}
+
+    if not ret or img is None:
+        return {"status": "error", "message": "Empty frame from camera",
+                "new_items": [], "all_items": get_cart_items(trolley_id)}
+
+    if process_frame is None:
+        return {"status": "error", "message": "Detection model unavailable",
+                "new_items": [], "all_items": get_cart_items(trolley_id)}
+
+    # process_frame() (utils.py) reads from a file path, so write the
+    # in-memory frame to the same path the manual flow already uses.
+    # This keeps both flows visually consistent in static/img/processed.jpg.
+    save_path = 'static/img/test.jpg'
+    save_dir = os.path.dirname(save_path)
+    if save_dir:
+        os.makedirs(save_dir, exist_ok=True)
+    try:
+        cv2.imwrite(save_path, img)
+    except cv2.error as e:
+        return {"status": "error", "message": f"Failed to write frame: {e}",
+                "new_items": [], "all_items": get_cart_items(trolley_id)}
+
+    try:
+        detected_items = process_frame(save_path)
+    except Exception as exc:
+        print(f"[WARN] detect_live_frame: process_frame failed: {exc}")
+        detected_items = []
+
+    new_items = append_cart_items(trolley_id, detected_items)
+
+    return {
+        "status": "ok",
+        "new_items": new_items,
+        "all_items": get_cart_items(trolley_id),
+    }
 
 
 def capture_frame(save_path: str = 'static/img/test.jpg', trolley_id=None) -> bool:
